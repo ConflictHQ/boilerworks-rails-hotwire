@@ -1,7 +1,7 @@
 <% content_for(:page_title, "Edit #{@form_definition.name}") %>
 
 <div class="mb-6">
-  <%= link_to form_definition_path(@form_definition.uuid), class: "inline-flex items-center text-sm text-gray-400 hover:text-gray-200" do %>
+  <%= link_to form_definition_path(@form_definition.uuid), class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
     </svg>
@@ -9,23 +9,23 @@
   <% end %>
 </div>
 
-<div class="bg-gray-800 border border-gray-700 rounded-lg p-6 mb-6">
-  <h2 class="text-xl font-semibold text-gray-100 mb-6">Edit Form Definition</h2>
+<div class="bg-bg-card border border-border rounded-lg p-6 mb-6">
+  <h2 class="text-xl font-semibold text-text mb-6">Edit Form Definition</h2>
   <%= render "form", form_definition: @form_definition %>
 </div>
 
-<div class="bg-gray-800 border border-gray-700 rounded-lg p-6" data-controller="form-builder">
-  <h3 class="text-lg font-semibold text-gray-100 mb-4">Form Builder</h3>
-  <p class="text-sm text-gray-400 mb-6">Add and arrange fields for this form. Changes are saved when you click "Save Schema".</p>
+<div class="bg-bg-card border border-border rounded-lg p-6" data-controller="form-builder">
+  <h3 class="text-lg font-semibold text-text mb-4">Form Builder</h3>
+  <p class="text-sm text-text-muted mb-6">Add and arrange fields for this form. Changes are saved when you click "Save Schema".</p>
 
   <div class="flex gap-6">
     <%# Field type palette %>
     <div class="w-64 shrink-0">
-      <h4 class="text-sm font-medium text-gray-300 mb-3">Field Types</h4>
+      <h4 class="text-sm font-medium text-text-muted mb-3">Field Types</h4>
       <div class="space-y-1">
         <% FormFieldTypes::TYPES.each do |type, config| %>
           <button type="button"
-                  class="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-gray-700 hover:text-gray-100 transition-colors"
+                  class="w-full text-left px-3 py-2 rounded-lg text-sm text-text-muted hover:bg-accent hover:text-text transition-colors"
                   data-action="click->form-builder#addField"
                   data-form-builder-field-type-param="<%= type %>"
                   data-form-builder-field-label-param="<%= config[:label] %>">
@@ -39,40 +39,40 @@
     <div class="flex-1">
       <div data-form-builder-target="fieldList" class="space-y-3 min-h-[200px]">
         <% @form_definition.field_definitions.each_with_index do |field, index| %>
-          <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 field-item" data-index="<%= index %>">
+          <div class="bg-bg border border-border rounded-lg p-4 field-item" data-index="<%= index %>">
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-2">
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-700 text-gray-300"><%= field["type"] %></span>
-                <span class="text-sm font-medium text-gray-100"><%= field["label"] %></span>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-accent text-text-muted"><%= field["type"] %></span>
+                <span class="text-sm font-medium text-text"><%= field["label"] %></span>
               </div>
               <div class="flex items-center gap-1">
-                <button type="button" class="p-1 text-gray-500 hover:text-gray-300" data-action="click->form-builder#moveUp">
+                <button type="button" class="p-1 text-text-muted hover:text-text" data-action="click->form-builder#moveUp">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
                 </button>
-                <button type="button" class="p-1 text-gray-500 hover:text-gray-300" data-action="click->form-builder#moveDown">
+                <button type="button" class="p-1 text-text-muted hover:text-text" data-action="click->form-builder#moveDown">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <button type="button" class="p-1 text-red-500 hover:text-red-300" data-action="click->form-builder#removeField">
+                <button type="button" class="p-1 text-destructive hover:text-destructive/80" data-action="click->form-builder#removeField">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
               </div>
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs text-gray-500 mb-1">Field Name</label>
-                <input type="text" value="<%= field["name"] %>" data-field-attr="name" class="block w-full rounded bg-gray-800 border border-gray-600 text-gray-100 text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-red-500" data-action="input->form-builder#updateSchema">
+                <label class="block text-xs text-text-muted mb-1">Field Name</label>
+                <input type="text" value="<%= field["name"] %>" data-field-attr="name" class="block w-full rounded bg-bg-input border border-input-border text-text text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary" data-action="input->form-builder#updateSchema">
               </div>
               <div>
-                <label class="block text-xs text-gray-500 mb-1">Label</label>
-                <input type="text" value="<%= field["label"] %>" data-field-attr="label" class="block w-full rounded bg-gray-800 border border-gray-600 text-gray-100 text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-red-500" data-action="input->form-builder#updateSchema">
+                <label class="block text-xs text-text-muted mb-1">Label</label>
+                <input type="text" value="<%= field["label"] %>" data-field-attr="label" class="block w-full rounded bg-bg-input border border-input-border text-text text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary" data-action="input->form-builder#updateSchema">
               </div>
               <div>
-                <label class="block text-xs text-gray-500 mb-1">Placeholder</label>
-                <input type="text" value="<%= field["placeholder"] %>" data-field-attr="placeholder" class="block w-full rounded bg-gray-800 border border-gray-600 text-gray-100 text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-red-500" data-action="input->form-builder#updateSchema">
+                <label class="block text-xs text-text-muted mb-1">Placeholder</label>
+                <input type="text" value="<%= field["placeholder"] %>" data-field-attr="placeholder" class="block w-full rounded bg-bg-input border border-input-border text-text text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary" data-action="input->form-builder#updateSchema">
               </div>
               <div class="flex items-end gap-3">
-                <label class="flex items-center gap-2 text-sm text-gray-300">
-                  <input type="checkbox" <%= "checked" if field.dig("validations", "required") %> data-field-attr="required" class="rounded bg-gray-800 border-gray-600 text-red-500 focus:ring-red-500" data-action="change->form-builder#updateSchema">
+                <label class="flex items-center gap-2 text-sm text-text-muted">
+                  <input type="checkbox" <%= "checked" if field.dig("validations", "required") %> data-field-attr="required" class="rounded bg-bg-input border-input-border text-primary focus:ring-primary" data-action="change->form-builder#updateSchema">
                   Required
                 </label>
               </div>
@@ -83,14 +83,14 @@
       </div>
 
       <% if @form_definition.field_definitions.empty? %>
-        <div data-form-builder-target="emptyState" class="text-center py-12 text-gray-500">
+        <div data-form-builder-target="emptyState" class="text-center py-12 text-text-muted">
           <p>No fields yet. Click a field type on the left to add one.</p>
         </div>
       <% end %>
 
       <%= form_with(url: form_definition_path(@form_definition), method: :patch, class: "mt-6") do |f| %>
         <input type="hidden" name="form_definition[schema]" data-form-builder-target="schemaInput" value="<%= @form_definition.schema.to_json %>">
-        <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+        <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-primary hover:bg-primary-hover text-primary-fg rounded-lg text-sm font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg">
           Save Schema
         </button>
       <% end %>

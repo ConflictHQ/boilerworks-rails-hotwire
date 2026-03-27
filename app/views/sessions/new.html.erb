@@ -1,51 +1,51 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-900 px-4">
+<div class="min-h-screen flex items-center justify-center bg-bg px-4">
   <div class="w-full max-w-md">
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-red-500">Boilerworks</h1>
-      <p class="mt-2 text-gray-400">Sign in to your account</p>
+      <img src="/boilerworks-logo.svg" alt="Boilerworks" class="h-10 mx-auto mb-6">
+      <p class="mt-2 text-text-muted">Sign in to your account</p>
     </div>
 
-    <div class="bg-gray-800 border border-gray-700 rounded-lg p-8">
+    <div class="bg-bg-card border border-border rounded-xl p-8">
       <% if flash[:alert] %>
-        <div class="mb-4 px-4 py-3 bg-red-900/50 border border-red-700 text-red-300 rounded-lg text-sm">
+        <div class="mb-4 px-4 py-3 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg text-sm">
           <%= flash[:alert] %>
         </div>
       <% end %>
 
       <% if flash[:notice] %>
-        <div class="mb-4 px-4 py-3 bg-green-900/50 border border-green-700 text-green-300 rounded-lg text-sm">
+        <div class="mb-4 px-4 py-3 bg-success/10 border border-success/30 text-success rounded-lg text-sm">
           <%= flash[:notice] %>
         </div>
       <% end %>
 
       <%= form_with url: session_url, class: "space-y-6" do |form| %>
         <div>
-          <label for="email_address" class="block text-sm font-medium text-gray-300 mb-1">Email address</label>
+          <label for="email_address" class="block text-sm font-medium text-text-muted mb-1">Email address</label>
           <%= form.email_field :email_address,
             required: true,
             autofocus: true,
             autocomplete: "username",
             placeholder: "admin@boilerworks.dev",
             value: params[:email_address],
-            class: "block w-full rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" %>
+            class: "block w-full rounded-lg bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
         </div>
 
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
-            <%= link_to "Forgot password?", new_password_path, class: "text-sm text-red-400 hover:text-red-300" %>
+            <label for="password" class="block text-sm font-medium text-text-muted">Password</label>
+            <%= link_to "Forgot password?", new_password_path, class: "text-sm text-primary hover:underline" %>
           </div>
           <%= form.password_field :password,
             required: true,
             autocomplete: "current-password",
             placeholder: "Enter your password",
             maxlength: 72,
-            class: "block w-full rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" %>
+            class: "block w-full rounded-lg bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
         </div>
 
         <div>
           <%= form.submit "Sign in",
-            class: "w-full rounded-lg px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800" %>
+            class: "w-full rounded-lg px-4 py-2.5 bg-primary hover:bg-primary-hover text-primary-fg font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg" %>
         </div>
       <% end %>
     </div>

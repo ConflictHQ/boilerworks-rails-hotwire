@@ -2,7 +2,7 @@
 
 <div class="mb-6">
   <% if authenticated? %>
-    <%= link_to form_definitions_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-gray-200" do %>
+    <%= link_to form_definitions_path, class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
@@ -12,14 +12,14 @@
 </div>
 
 <div class="max-w-2xl mx-auto">
-  <div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-100 mb-2"><%= @form_definition.name %></h2>
+  <div class="bg-bg-card border border-border rounded-lg p-6">
+    <h2 class="text-2xl font-bold text-text mb-2"><%= @form_definition.name %></h2>
     <% if @form_definition.description.present? %>
-      <p class="text-gray-400 mb-6"><%= @form_definition.description %></p>
+      <p class="text-text-muted mb-6"><%= @form_definition.description %></p>
     <% end %>
 
     <% if @validation_errors.present? %>
-      <div class="px-4 py-3 bg-red-900/50 border border-red-700 text-red-300 rounded-lg mb-6">
+      <div class="px-4 py-3 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg mb-6">
         <h3 class="text-sm font-medium mb-2">Please fix the following errors:</h3>
         <ul class="list-disc list-inside text-sm space-y-1">
           <% @validation_errors.each do |field_name, messages| %>
@@ -37,7 +37,7 @@
       <% end %>
 
       <div class="pt-2">
-        <button type="submit" class="rounded-lg px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+        <button type="submit" class="rounded-lg px-6 py-2.5 bg-primary hover:bg-primary-hover text-primary-fg font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg">
           Submit
         </button>
       </div>

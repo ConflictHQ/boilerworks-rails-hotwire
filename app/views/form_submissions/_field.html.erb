@@ -7,15 +7,15 @@
   required = validations["required"]
   options = field["options"] || []
   input_name = "submission[#{field_name}]"
-  input_class = "block w-full rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+  input_class = "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
 %>
 
 <% unless field_type == "hidden" %>
   <div>
-    <label for="submission_<%= field_name %>" class="block text-sm font-medium text-gray-300 mb-1">
+    <label for="submission_<%= field_name %>" class="block text-sm font-medium text-text-muted mb-1">
       <%= field_label %>
       <% if required %>
-        <span class="text-red-400">*</span>
+        <span class="text-destructive">*</span>
       <% end %>
     </label>
 <% end %>
@@ -38,11 +38,11 @@
 
 <% when "rating" %>
     <input type="number" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" class="<%= input_class %>" <%= "required" if required %> min="<%= validations['min'] || 1 %>" max="<%= validations['max'] || 5 %>" step="1">
-    <p class="text-xs text-gray-500 mt-1">Rate from <%= validations['min'] || 1 %> to <%= validations['max'] || 5 %></p>
+    <p class="text-xs text-text-muted mt-1">Rate from <%= validations['min'] || 1 %> to <%= validations['max'] || 5 %></p>
 
 <% when "slider" %>
-    <input type="range" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value || validations['min'] || 0 %>" class="w-full accent-red-500" <%= "required" if required %> min="<%= validations['min'] || 0 %>" max="<%= validations['max'] || 100 %>" step="<%= validations['step'] || 1 %>">
-    <div class="flex justify-between text-xs text-gray-500 mt-1">
+    <input type="range" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value || validations['min'] || 0 %>" class="w-full accent-primary" <%= "required" if required %> min="<%= validations['min'] || 0 %>" max="<%= validations['max'] || 100 %>" step="<%= validations['step'] || 1 %>">
+    <div class="flex justify-between text-xs text-text-muted mt-1">
       <span><%= validations['min'] || 0 %></span>
       <span><%= validations['max'] || 100 %></span>
     </div>
@@ -70,13 +70,13 @@
         <option value="<%= option["value"] %>" <%= "selected" if Array(value).include?(option["value"]) %>><%= option["label"] || option["value"] %></option>
       <% end %>
     </select>
-    <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple options</p>
+    <p class="text-xs text-text-muted mt-1">Hold Ctrl/Cmd to select multiple options</p>
 
 <% when "radio" %>
     <div class="space-y-2 mt-1">
       <% options.each_with_index do |option, i| %>
-        <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
-          <input type="radio" name="<%= input_name %>" value="<%= option["value"] %>" class="text-red-500 bg-gray-700 border-gray-600 focus:ring-red-500" <%= "checked" if value == option["value"] %> <%= "required" if required && i == 0 %>>
+        <label class="flex items-center gap-2 text-sm text-text cursor-pointer">
+          <input type="radio" name="<%= input_name %>" value="<%= option["value"] %>" class="text-primary bg-bg-input border-input-border focus:ring-primary" <%= "checked" if value == option["value"] %> <%= "required" if required && i == 0 %>>
           <%= option["label"] || option["value"] %>
         </label>
       <% end %>
@@ -84,9 +84,9 @@
 
 <% when "checkbox" %>
     <div class="mt-1">
-      <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+      <label class="flex items-center gap-2 text-sm text-text cursor-pointer">
         <input type="hidden" name="<%= input_name %>" value="0">
-        <input type="checkbox" name="<%= input_name %>" value="1" class="rounded bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500" <%= "checked" if value.to_s == "1" || value == true %> <%= "required" if required %>>
+        <input type="checkbox" name="<%= input_name %>" value="1" class="rounded bg-bg-input border-input-border text-primary focus:ring-primary" <%= "checked" if value.to_s == "1" || value == true %> <%= "required" if required %>>
         <%= field_label %>
       </label>
     </div>
@@ -96,23 +96,23 @@
       <label class="flex items-center gap-3 cursor-pointer">
         <input type="hidden" name="<%= input_name %>" value="0">
         <input type="checkbox" name="<%= input_name %>" value="1" class="sr-only peer" <%= "checked" if value.to_s == "1" || value == true %>>
-        <div class="relative w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
-        <span class="text-sm text-gray-300"><%= field_label %></span>
+        <div class="relative w-11 h-6 bg-accent peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+        <span class="text-sm text-text"><%= field_label %></span>
       </label>
     </div>
 
 <% when "color" %>
-    <input type="color" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value || '#ef4444' %>" class="h-10 w-20 rounded bg-gray-700 border border-gray-600 cursor-pointer" <%= "required" if required %>>
+    <input type="color" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value || '#ef4444' %>" class="h-10 w-20 rounded bg-bg-input border border-input-border cursor-pointer" <%= "required" if required %>>
 
 <% when "file", "image" %>
-    <input type="file" name="<%= input_name %>" id="submission_<%= field_name %>" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-700 file:text-gray-300 hover:file:bg-gray-600 cursor-pointer" <%= "required" if required %> <%= "accept=image/*" if field_type == "image" %> <%= "accept=#{validations['accept']}" if validations["accept"] %>>
+    <input type="file" name="<%= input_name %>" id="submission_<%= field_name %>" class="block w-full text-sm text-text-muted file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-accent file:text-text hover:file:bg-accent/80 cursor-pointer" <%= "required" if required %> <%= "accept=image/*" if field_type == "image" %> <%= "accept=#{validations['accept']}" if validations["accept"] %>>
     <% if validations["max_size"] %>
-      <p class="text-xs text-gray-500 mt-1">Max size: <%= validations["max_size"] %></p>
+      <p class="text-xs text-text-muted mt-1">Max size: <%= validations["max_size"] %></p>
     <% end %>
 
 <% when "signature" %>
-    <div class="bg-gray-900 border border-gray-600 rounded-lg p-4 text-center">
-      <p class="text-sm text-gray-500">Signature capture requires JavaScript. Use the drawing area below.</p>
+    <div class="bg-bg border border-input-border rounded-lg p-4 text-center">
+      <p class="text-sm text-text-muted">Signature capture requires JavaScript. Use the drawing area below.</p>
       <textarea name="<%= input_name %>" id="submission_<%= field_name %>" rows="3" placeholder="Type your signature..." class="<%= input_class %> mt-2" <%= "required" if required %>><%= value %></textarea>
     </div>
 

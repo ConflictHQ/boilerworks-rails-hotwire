@@ -1,7 +1,7 @@
 <% content_for(:page_title, @category.name) %>
 
 <div class="mb-6">
-  <%= link_to categories_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-gray-200" do %>
+  <%= link_to categories_path, class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
     </svg>
@@ -9,54 +9,54 @@
   <% end %>
 </div>
 
-<div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
+<div class="bg-bg-card border border-border rounded-lg p-6">
   <div class="flex items-start justify-between mb-6">
     <div>
-      <h2 class="text-2xl font-bold text-gray-100"><%= @category.name %></h2>
-      <p class="text-sm text-gray-400 mt-1">slug: <%= @category.slug %></p>
+      <h2 class="text-2xl font-bold text-text"><%= @category.name %></h2>
+      <p class="text-sm text-text-muted mt-1">slug: <%= @category.slug %></p>
     </div>
     <div class="flex items-center gap-3">
-      <%= link_to "Edit", edit_category_path(@category.uuid), class: "inline-flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-lg text-sm font-medium transition-colors border border-gray-600" %>
-      <%= button_to "Delete", category_path(@category.uuid), method: :delete, class: "inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer", form: { data: { turbo_confirm: "Are you sure you want to delete this category?" } } %>
+      <%= link_to "Edit", edit_category_path(@category.uuid), class: "inline-flex items-center px-4 py-2 bg-bg-input hover:bg-accent text-text rounded-lg text-sm font-medium transition-colors border border-border" %>
+      <%= button_to "Delete", category_path(@category.uuid), method: :delete, class: "inline-flex items-center px-4 py-2 bg-destructive hover:bg-destructive/80 text-primary-fg rounded-lg text-sm font-medium transition-colors cursor-pointer", form: { data: { turbo_confirm: "Are you sure you want to delete this category?" } } %>
     </div>
   </div>
 
   <dl class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div>
-      <dt class="text-sm font-medium text-gray-400">Parent Category</dt>
-      <dd class="mt-1 text-gray-100"><%= @category.parent&.name || "None (top-level)" %></dd>
+      <dt class="text-sm font-medium text-text-muted">Parent Category</dt>
+      <dd class="mt-1 text-text"><%= @category.parent&.name || "None (top-level)" %></dd>
     </div>
 
     <div>
-      <dt class="text-sm font-medium text-gray-400">Products</dt>
-      <dd class="mt-1 text-gray-100"><%= @category.products.count %></dd>
+      <dt class="text-sm font-medium text-text-muted">Products</dt>
+      <dd class="mt-1 text-text"><%= @category.products.count %></dd>
     </div>
 
     <div class="md:col-span-2">
-      <dt class="text-sm font-medium text-gray-400">Description</dt>
-      <dd class="mt-1 text-gray-100"><%= @category.description || "No description" %></dd>
+      <dt class="text-sm font-medium text-text-muted">Description</dt>
+      <dd class="mt-1 text-text"><%= @category.description || "No description" %></dd>
     </div>
 
     <div>
-      <dt class="text-sm font-medium text-gray-400">Created</dt>
-      <dd class="mt-1 text-gray-300 text-sm"><%= @category.created_at.strftime("%B %d, %Y at %I:%M %p") %></dd>
+      <dt class="text-sm font-medium text-text-muted">Created</dt>
+      <dd class="mt-1 text-text-muted text-sm"><%= @category.created_at.strftime("%B %d, %Y at %I:%M %p") %></dd>
     </div>
 
     <div>
-      <dt class="text-sm font-medium text-gray-400">Updated</dt>
-      <dd class="mt-1 text-gray-300 text-sm"><%= @category.updated_at.strftime("%B %d, %Y at %I:%M %p") %></dd>
+      <dt class="text-sm font-medium text-text-muted">Updated</dt>
+      <dd class="mt-1 text-text-muted text-sm"><%= @category.updated_at.strftime("%B %d, %Y at %I:%M %p") %></dd>
     </div>
   </dl>
 </div>
 
 <% if @category.children.any? %>
-  <div class="mt-6 bg-gray-800 border border-gray-700 rounded-lg p-6">
-    <h3 class="text-lg font-semibold text-gray-100 mb-4">Subcategories</h3>
+  <div class="mt-6 bg-bg-card border border-border rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-text mb-4">Subcategories</h3>
     <div class="space-y-2">
       <% @category.children.each do |child| %>
-        <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 rounded-lg">
-          <%= link_to child.name, category_path(child.uuid), class: "text-red-400 hover:text-red-300 text-sm font-medium" %>
-          <span class="text-xs text-gray-400"><%= child.products.count %> products</span>
+        <div class="flex items-center justify-between px-4 py-3 bg-accent/50 rounded-lg">
+          <%= link_to child.name, category_path(child.uuid), class: "text-primary hover:underline text-sm font-medium" %>
+          <span class="text-xs text-text-muted"><%= child.products.count %> products</span>
         </div>
       <% end %>
     </div>

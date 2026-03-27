@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Authentication
   include Pundit::Authorization
   include SetCurrentAttributes
-  # Pagy auto-includes via Railtie in Rails
+  include Pagy::Method
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
   stale_when_importmap_changes
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  # Pundit expects current_user; Rails 8 auth uses Current.user
+  def current_user
+    Current.user
+  end
+  helper_method :current_user
 
   private
 

@@ -1,7 +1,7 @@
 <% content_for(:page_title, "New Workflow Instance") %>
 
 <div class="mb-6">
-  <%= link_to workflow_instances_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-gray-200" do %>
+  <%= link_to workflow_instances_path, class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
     </svg>
@@ -9,12 +9,12 @@
   <% end %>
 </div>
 
-<div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
-  <h2 class="text-xl font-semibold text-gray-100 mb-6">New Workflow Instance</h2>
+<div class="bg-bg-card border border-border rounded-lg p-6">
+  <h2 class="text-xl font-semibold text-text mb-6">New Workflow Instance</h2>
 
   <%= form_with(model: @workflow_instance, class: "space-y-6") do |form| %>
     <% if @workflow_instance.errors.any? %>
-      <div class="px-4 py-3 bg-red-900/50 border border-red-700 text-red-300 rounded-lg">
+      <div class="px-4 py-3 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg">
         <h3 class="text-sm font-medium mb-2"><%= pluralize(@workflow_instance.errors.count, "error") %> prohibited this instance from being saved:</h3>
         <ul class="list-disc list-inside text-sm space-y-1">
           <% @workflow_instance.errors.full_messages.each do |message| %>
@@ -25,13 +25,13 @@
     <% end %>
 
     <div>
-      <%= form.label :workflow_definition_id, "Workflow Definition", class: "block text-sm font-medium text-gray-300 mb-1" %>
-      <%= form.collection_select :workflow_definition_id, @workflow_definitions, :id, :name, { prompt: "Select a workflow" }, class: "block w-full rounded-lg bg-gray-700 border border-gray-600 text-gray-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" %>
+      <%= form.label :workflow_definition_id, "Workflow Definition", class: "block text-sm font-medium text-text-muted mb-1" %>
+      <%= form.collection_select :workflow_definition_id, @workflow_definitions, :id, :name, { prompt: "Select a workflow" }, class: "block w-full rounded-md bg-bg-input border border-input-border text-text px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
     </div>
 
     <div class="flex items-center gap-3 pt-2">
-      <%= form.submit "Create Instance", class: "rounded-lg px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800" %>
-      <%= link_to "Cancel", workflow_instances_path, class: "rounded-lg px-4 py-2.5 bg-gray-700 hover:bg-gray-600 text-gray-200 font-medium transition-colors border border-gray-600" %>
+      <%= form.submit "Create Instance", class: "rounded-lg px-4 py-2.5 bg-primary hover:bg-primary-hover text-primary-fg font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg" %>
+      <%= link_to "Cancel", workflow_instances_path, class: "rounded-lg px-4 py-2.5 bg-bg-input hover:bg-accent text-text font-medium transition-colors border border-border" %>
     </div>
   <% end %>
 </div>

@@ -1,21 +1,32 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <% if alert = flash[:alert] %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
-  <% end %>
-
-  <h1 class="font-bold text-4xl">Update your password</h1>
-
-  <%= form_with url: password_path(params[:token]), method: :put, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+<div class="min-h-screen flex items-center justify-center bg-bg px-4">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <img src="/boilerworks-logo.svg" alt="Boilerworks" class="h-10 mx-auto mb-6">
+      <p class="mt-2 text-text-muted">Update your password</p>
     </div>
 
-    <div class="my-5">
-      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
-    </div>
+    <div class="bg-bg-card border border-border rounded-xl p-8">
+      <% if alert = flash[:alert] %>
+        <div class="mb-4 px-4 py-3 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg text-sm">
+          <%= alert %>
+        </div>
+      <% end %>
 
-    <div class="inline">
-      <%= form.submit "Save", class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <%= form_with url: password_path(params[:token]), method: :put, class: "space-y-6" do |form| %>
+        <div>
+          <label for="password" class="block text-sm font-medium text-text-muted mb-1">New password</label>
+          <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72, class: "block w-full rounded-lg bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
+        </div>
+
+        <div>
+          <label for="password_confirmation" class="block text-sm font-medium text-text-muted mb-1">Confirm password</label>
+          <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72, class: "block w-full rounded-lg bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
+        </div>
+
+        <div>
+          <%= form.submit "Save", class: "w-full rounded-lg px-4 py-2.5 bg-primary hover:bg-primary-hover text-primary-fg font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>

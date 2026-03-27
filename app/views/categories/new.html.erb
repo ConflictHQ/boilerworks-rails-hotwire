@@ -1,7 +1,7 @@
 <% content_for(:page_title, "New Category") %>
 
 <div class="mb-6">
-  <%= link_to categories_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-gray-200" do %>
+  <%= link_to categories_path, class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
     </svg>
@@ -9,7 +9,7 @@
   <% end %>
 </div>
 
-<div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
-  <h2 class="text-xl font-semibold text-gray-100 mb-6">New Category</h2>
+<div class="bg-bg-card border border-border rounded-lg p-6">
+  <h2 class="text-xl font-semibold text-text mb-6">New Category</h2>
   <%= render "form", category: @category %>
 </div>
