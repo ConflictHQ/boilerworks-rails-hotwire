@@ -1,0 +1,114 @@
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: Dockerfile.dev
+    container_name: boilerworks-rails
+    ports:
+      - "3000:3000"
+    volumes:
+      - ..:/app
+      - bundle_cache:/usr/local/bundle
+    environment:
+      - DATABASE_URL=postgres://boilerworks:boilerworks@db:5432/boilerworks_development
+      - REDIS_URL=redis://redis:6379/0
+      - RAILS_ENV=development
+      - RAILS_LOG_TO_STDOUT=true
+      # SOLID_QUEUE_IN_PUMA not set — runs as separate worker service
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/up || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: boilerworks-rails-db
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_USER=boilerworks
+      - POSTGRES_PASSWORD=boilerworks
+      - POSTGRES_DB=boilerworks_development
+    volumes:
+      - rails_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U boilerworks -d boilerworks_development"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: boilerworks-rails-redis
+    ports:
+      - "6382:6379"
+    volumes:
+      - rails_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: ..
+      dockerfile: Dockerfile.dev
+    container_name: boilerworks-rails-worker
+    command: bundle exec rake solid_queue:start
+    volumes:
+      - ..:/app
+      - bundle_cache:/usr/local/bundle
+    environment:
+      - DATABASE_URL=postgres://boilerworks:boilerworks@db:5432/boilerworks_development
+      - REDIS_URL=redis://redis:6379/0
+      - RAILS_ENV=development
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: boilerworks-rails-mailpit
+    ports:
+      - "8026:8025"
+      - "1026:1025"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8025/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio
+    container_name: boilerworks-rails-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9002:9000"
+      - "9003:9001"
+    environment:
+      - MINIO_ROOT_USER=boilerworks
+      - MINIO_ROOT_PASSWORD=boilerworks
+    volumes:
+      - rails_minio:/data
+    restart: unless-stopped
+
+volumes:
+  rails_db:
+  rails_redis:
+  rails_minio:
+  bundle_cache:

@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/*
+ * Boilerworks Dark Theme
+ * Primary: oklch(0.55 0.2 16) → #DC394C (red)
+ */
+
+@theme {
+  --color-primary: oklch(0.55 0.2 16);
+  --color-primary-light: oklch(0.62 0.2 16);
+  --color-bg-dark: oklch(0.15 0.005 260);
+  --color-bg-card: oklch(0.18 0.005 260);
+  --color-bg-input: oklch(0.22 0.01 260);
+  --color-border-dark: oklch(0.28 0.01 260);
+  --color-text-light: oklch(0.93 0.005 106);
+  --color-text-muted: oklch(0.6 0.01 260);
+}
