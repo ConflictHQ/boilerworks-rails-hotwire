@@ -1,0 +1,9 @@
+<%= turbo_stream.prepend "form_definitions" do %>
+  <%= render @form_definition %>
+<% end %>
+
+<%= turbo_stream.update "flash" do %>
+  <div class="px-4 py-3 bg-green-900/50 border border-green-700 text-green-300 rounded-lg text-sm" data-controller="flash">
+    Form definition was successfully created.
+  </div>
+<% end %>

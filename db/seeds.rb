@@ -81,4 +81,81 @@ products.each do |attrs|
 end
 
 puts "  Created #{products.size} products"
+
+puts "Seeding form/workflow permissions..."
+
+form_workflow_perms = [
+  { name: "View Forms", slug: "form.view" },
+  { name: "Add Forms", slug: "form.add" },
+  { name: "Change Forms", slug: "form.change" },
+  { name: "Delete Forms", slug: "form.delete" },
+  { name: "View Workflows", slug: "workflow.view" },
+  { name: "Add Workflows", slug: "workflow.add" },
+  { name: "Change Workflows", slug: "workflow.change" },
+  { name: "Delete Workflows", slug: "workflow.delete" }
+]
+
+form_workflow_perms.each do |attrs|
+  Permission.find_or_create_by!(slug: attrs[:slug]) { |p| p.name = attrs[:name] }
+end
+
+admin_group.permissions = Permission.all
+puts "  Added form/workflow permissions to Admin group"
+
+puts "Seeding sample form definition..."
+
+FormDefinition.find_or_create_by!(slug: "contact-form") do |f|
+  f.name = "Contact Form"
+  f.description = "A simple contact form"
+  f.status = "published"
+  f.schema = {
+    "fields" => [
+      { "name" => "name", "type" => "text", "label" => "Full Name", "validations" => { "required" => true } },
+      { "name" => "email", "type" => "email", "label" => "Email Address", "validations" => { "required" => true } },
+      { "name" => "subject", "type" => "select", "label" => "Subject", "options" => [
+        { "label" => "General Inquiry", "value" => "general" },
+        { "label" => "Support", "value" => "support" },
+        { "label" => "Feedback", "value" => "feedback" }
+      ], "validations" => { "required" => true } },
+      { "name" => "message", "type" => "textarea", "label" => "Message", "validations" => { "required" => true, "min_length" => 10 } },
+      { "name" => "rating", "type" => "rating", "label" => "How would you rate us?", "validations" => { "min" => 1, "max" => 5 } }
+    ]
+  }
+end
+puts "  Created sample contact form"
+
+puts "Seeding sample workflow definition..."
+
+WorkflowDefinition.find_or_create_by!(slug: "content-approval") do |w|
+  w.name = "Content Approval"
+  w.description = "Review and approval workflow for content"
+  w.target_type = "Product"
+  w.states = [
+    { "name" => "draft", "initial" => true, "label" => "Draft" },
+    { "name" => "in_review", "label" => "In Review" },
+    { "name" => "approved", "label" => "Approved" },
+    { "name" => "rejected", "label" => "Rejected" },
+    { "name" => "published", "label" => "Published" }
+  ]
+  w.transitions = [
+    { "from" => "draft", "to" => "in_review", "label" => "Submit for Review", "conditions" => [{ "type" => "is_authenticated" }] },
+    { "from" => "in_review", "to" => "approved", "label" => "Approve", "conditions" => [{ "type" => "user_has_role", "value" => "Admin" }] },
+    { "from" => "in_review", "to" => "rejected", "label" => "Reject", "conditions" => [{ "type" => "user_has_role", "value" => "Admin" }] },
+    { "from" => "approved", "to" => "published", "label" => "Publish", "actions" => [{ "type" => "notify_user", "message" => "Content published!" }] },
+    { "from" => "rejected", "to" => "draft", "label" => "Revise" }
+  ]
+end
+puts "  Created sample content approval workflow"
+
+puts "Seeding sample workflow instance..."
+
+content_approval_wf = WorkflowDefinition.find_by!(slug: "content-approval")
+unless WorkflowInstance.exists?(workflow_definition: content_approval_wf)
+  WorkflowInstance.create!(
+    workflow_definition: content_approval_wf,
+    current_state: "draft"
+  )
+  puts "  Created sample workflow instance in 'draft' state"
+end
+
 puts "Seeding complete!"

@@ -1,24 +1,55 @@
-# README
+# Boilerworks Rails + Hotwire
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Full-stack Rails 8 template with Hotwire (Turbo + Stimulus), Pundit group-based authorization, JSON forms engine, and JSON workflow engine.
 
-Things you may want to cover:
+## Stack
 
-* Ruby version
+- Rails 8.1.3 (Ruby 3.3), Hotwire, Tailwind CSS 4
+- Auth: Rails 8 auth generator (session, bcrypt)
+- Authorization: Pundit (group-based permissions)
+- PostgreSQL 16, Redis 7, Solid Queue, Mailpit, MinIO
+- Docker Compose (6 services)
 
-* System dependencies
+## Features
 
-* Configuration
+- Group-based permission system with Pundit policies
+- Model concerns: Auditable, SoftDeletable, ExternalId, Versionable
+- Product + Category CRUD with Turbo Frame/Stream responses
+- JSON Schema forms engine (22 field types, validation, form builder)
+- JSON workflow engine (state machines, conditions, async actions)
+- Boilerworks dark theme
+- RSpec tests with FactoryBot
+- GitHub Actions CI
 
-* Database creation
+## Quick Start
 
-* Database initialization
+```bash
+make up      # Start all services
+make seed    # Seed database
+# Open http://localhost:3000
+# Admin: admin@boilerworks.dev / password
+```
 
-* How to run the test suite
+## Commands
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+make up / down / restart / logs / status
+make seed / migrate / setup / console
+make lint / lint-fix / test
+make clean
+```
 
-* Deployment instructions
+## Services
 
-* ...
+| Service | URL |
+|---------|-----|
+| App | http://localhost:3000 |
+| Health | http://localhost:3000/up |
+| Mailpit | http://localhost:8026 |
+| MinIO Console | http://localhost:9003 |
+
+## Documentation
+
+- [bootstrap.md](bootstrap.md) -- Conventions and patterns
+- [CLAUDE.md](CLAUDE.md) -- Claude agent configuration
+- [AGENTS.md](AGENTS.md) -- Generic agent shim

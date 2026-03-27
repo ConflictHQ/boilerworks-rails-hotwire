@@ -1,0 +1,15 @@
+<% content_for(:page_title, "New Workflow Definition") %>
+
+<div class="mb-6">
+  <%= link_to workflow_definitions_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-gray-200" do %>
+    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+    Back to Workflows
+  <% end %>
+</div>
+
+<div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
+  <h2 class="text-xl font-semibold text-gray-100 mb-6">New Workflow Definition</h2>
+  <%= render "form", workflow_definition: @workflow_definition %>
+</div>

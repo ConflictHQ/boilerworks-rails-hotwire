@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_014759) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_020005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -27,6 +27,47 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_014759) do
     t.datetime "updated_at", null: false
     t.integer "updated_by_id"
     t.string "uuid"
+  end
+
+  create_table "form_definitions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "created_by_id"
+    t.datetime "deleted_at"
+    t.integer "deleted_by_id"
+    t.text "description"
+    t.jsonb "field_config", default: {}
+    t.integer "lock_version", default: 0
+    t.jsonb "logic_rules", default: []
+    t.string "name", null: false
+    t.jsonb "schema", default: {"fields"=>[]}, null: false
+    t.string "slug", null: false
+    t.string "status", default: "draft", null: false
+    t.datetime "updated_at", null: false
+    t.integer "updated_by_id"
+    t.string "uuid"
+    t.integer "version", default: 1, null: false
+    t.index ["deleted_at"], name: "index_form_definitions_on_deleted_at"
+    t.index ["slug"], name: "index_form_definitions_on_slug", unique: true
+    t.index ["uuid"], name: "index_form_definitions_on_uuid", unique: true
+  end
+
+  create_table "form_submissions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "created_by_id"
+    t.jsonb "data", default: {}, null: false
+    t.datetime "deleted_at"
+    t.integer "deleted_by_id"
+    t.bigint "form_definition_id", null: false
+    t.integer "lock_version", default: 0
+    t.string "status", default: "draft", null: false
+    t.integer "submitted_by_id"
+    t.datetime "updated_at", null: false
+    t.integer "updated_by_id"
+    t.string "uuid"
+    t.datetime "validated_at"
+    t.index ["deleted_at"], name: "index_form_submissions_on_deleted_at"
+    t.index ["form_definition_id"], name: "index_form_submissions_on_form_definition_id"
+    t.index ["uuid"], name: "index_form_submissions_on_uuid", unique: true
   end
 
   create_table "groups", force: :cascade do |t|
@@ -81,6 +122,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_014759) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "transition_logs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.jsonb "data", default: {}
+    t.string "from_state", null: false
+    t.string "to_state", null: false
+    t.integer "transitioned_by_id"
+    t.datetime "updated_at", null: false
+    t.bigint "workflow_instance_id", null: false
+    t.index ["workflow_instance_id"], name: "index_transition_logs_on_workflow_instance_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "created_by_id"
@@ -97,5 +149,48 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_014759) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "workflow_definitions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "created_by_id"
+    t.datetime "deleted_at"
+    t.integer "deleted_by_id"
+    t.text "description"
+    t.integer "lock_version", default: 0
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.jsonb "states", default: [], null: false
+    t.string "target_type"
+    t.jsonb "transitions", default: [], null: false
+    t.datetime "updated_at", null: false
+    t.integer "updated_by_id"
+    t.string "uuid"
+    t.index ["deleted_at"], name: "index_workflow_definitions_on_deleted_at"
+    t.index ["slug"], name: "index_workflow_definitions_on_slug", unique: true
+    t.index ["uuid"], name: "index_workflow_definitions_on_uuid", unique: true
+  end
+
+  create_table "workflow_instances", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "created_by_id"
+    t.string "current_state", null: false
+    t.datetime "deleted_at"
+    t.integer "deleted_by_id"
+    t.integer "lock_version", default: 0
+    t.jsonb "metadata", default: {}
+    t.datetime "updated_at", null: false
+    t.integer "updated_by_id"
+    t.string "uuid"
+    t.bigint "workflow_definition_id", null: false
+    t.integer "workflowable_id"
+    t.string "workflowable_type"
+    t.index ["deleted_at"], name: "index_workflow_instances_on_deleted_at"
+    t.index ["uuid"], name: "index_workflow_instances_on_uuid", unique: true
+    t.index ["workflow_definition_id"], name: "index_workflow_instances_on_workflow_definition_id"
+    t.index ["workflowable_type", "workflowable_id"], name: "idx_on_workflowable_type_workflowable_id_a8a92819ec"
+  end
+
+  add_foreign_key "form_submissions", "form_definitions"
   add_foreign_key "sessions", "users"
+  add_foreign_key "transition_logs", "workflow_instances"
+  add_foreign_key "workflow_instances", "workflow_definitions"
 end

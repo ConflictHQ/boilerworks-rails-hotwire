@@ -1,0 +1,126 @@
+<%
+  field_name = field["name"]
+  field_type = field["type"]
+  field_label = field["label"] || field_name.titleize
+  placeholder = field["placeholder"] || ""
+  validations = field["validations"] || {}
+  required = validations["required"]
+  options = field["options"] || []
+  input_name = "submission[#{field_name}]"
+  input_class = "block w-full rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+%>
+
+<% unless field_type == "hidden" %>
+  <div>
+    <label for="submission_<%= field_name %>" class="block text-sm font-medium text-gray-300 mb-1">
+      <%= field_label %>
+      <% if required %>
+        <span class="text-red-400">*</span>
+      <% end %>
+    </label>
+<% end %>
+
+<% case field_type %>
+<% when "text", "phone" %>
+    <input type="text" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" placeholder="<%= placeholder %>" class="<%= input_class %>" <%= "required" if required %> <%= "minlength=#{validations['min_length']}" if validations["min_length"] %> <%= "maxlength=#{validations['max_length']}" if validations["max_length"] %> <%= "pattern=#{validations['pattern']}" if validations["pattern"] %>>
+
+<% when "email" %>
+    <input type="email" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" placeholder="<%= placeholder %>" class="<%= input_class %>" <%= "required" if required %>>
+
+<% when "url" %>
+    <input type="url" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" placeholder="<%= placeholder.presence || 'https://' %>" class="<%= input_class %>" <%= "required" if required %>>
+
+<% when "textarea", "rich_text" %>
+    <textarea name="<%= input_name %>" id="submission_<%= field_name %>" rows="4" placeholder="<%= placeholder %>" class="<%= input_class %>" <%= "required" if required %> <%= "minlength=#{validations['min_length']}" if validations["min_length"] %> <%= "maxlength=#{validations['max_length']}" if validations["max_length"] %>><%= value %></textarea>
+
+<% when "number" %>
+    <input type="number" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" placeholder="<%= placeholder %>" class="<%= input_class %>" <%= "required" if required %> <%= "min=#{validations['min']}" if validations["min"] %> <%= "max=#{validations['max']}" if validations["max"] %> <%= "step=#{validations['step']}" if validations["step"] %>>
+
+<% when "rating" %>
+    <input type="number" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" class="<%= input_class %>" <%= "required" if required %> min="<%= validations['min'] || 1 %>" max="<%= validations['max'] || 5 %>" step="1">
+    <p class="text-xs text-gray-500 mt-1">Rate from <%= validations['min'] || 1 %> to <%= validations['max'] || 5 %></p>
+
+<% when "slider" %>
+    <input type="range" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value || validations['min'] || 0 %>" class="w-full accent-red-500" <%= "required" if required %> min="<%= validations['min'] || 0 %>" max="<%= validations['max'] || 100 %>" step="<%= validations['step'] || 1 %>">
+    <div class="flex justify-between text-xs text-gray-500 mt-1">
+      <span><%= validations['min'] || 0 %></span>
+      <span><%= validations['max'] || 100 %></span>
+    </div>
+
+<% when "date" %>
+    <input type="date" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" class="<%= input_class %>" <%= "required" if required %> <%= "min=#{validations['min']}" if validations["min"] %> <%= "max=#{validations['max']}" if validations["max"] %>>
+
+<% when "time" %>
+    <input type="time" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" class="<%= input_class %>" <%= "required" if required %>>
+
+<% when "datetime" %>
+    <input type="datetime-local" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value %>" class="<%= input_class %>" <%= "required" if required %>>
+
+<% when "select" %>
+    <select name="<%= input_name %>" id="submission_<%= field_name %>" class="<%= input_class %>" <%= "required" if required %>>
+      <option value="">Select an option...</option>
+      <% options.each do |option| %>
+        <option value="<%= option["value"] %>" <%= "selected" if value == option["value"] %>><%= option["label"] || option["value"] %></option>
+      <% end %>
+    </select>
+
+<% when "multi_select" %>
+    <select name="<%= input_name %>[]" id="submission_<%= field_name %>" class="<%= input_class %>" multiple size="<%= [options.size, 6].min %>" <%= "required" if required %>>
+      <% options.each do |option| %>
+        <option value="<%= option["value"] %>" <%= "selected" if Array(value).include?(option["value"]) %>><%= option["label"] || option["value"] %></option>
+      <% end %>
+    </select>
+    <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple options</p>
+
+<% when "radio" %>
+    <div class="space-y-2 mt-1">
+      <% options.each_with_index do |option, i| %>
+        <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+          <input type="radio" name="<%= input_name %>" value="<%= option["value"] %>" class="text-red-500 bg-gray-700 border-gray-600 focus:ring-red-500" <%= "checked" if value == option["value"] %> <%= "required" if required && i == 0 %>>
+          <%= option["label"] || option["value"] %>
+        </label>
+      <% end %>
+    </div>
+
+<% when "checkbox" %>
+    <div class="mt-1">
+      <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+        <input type="hidden" name="<%= input_name %>" value="0">
+        <input type="checkbox" name="<%= input_name %>" value="1" class="rounded bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500" <%= "checked" if value.to_s == "1" || value == true %> <%= "required" if required %>>
+        <%= field_label %>
+      </label>
+    </div>
+
+<% when "toggle" %>
+    <div class="mt-1">
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input type="hidden" name="<%= input_name %>" value="0">
+        <input type="checkbox" name="<%= input_name %>" value="1" class="sr-only peer" <%= "checked" if value.to_s == "1" || value == true %>>
+        <div class="relative w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
+        <span class="text-sm text-gray-300"><%= field_label %></span>
+      </label>
+    </div>
+
+<% when "color" %>
+    <input type="color" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value || '#ef4444' %>" class="h-10 w-20 rounded bg-gray-700 border border-gray-600 cursor-pointer" <%= "required" if required %>>
+
+<% when "file", "image" %>
+    <input type="file" name="<%= input_name %>" id="submission_<%= field_name %>" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-700 file:text-gray-300 hover:file:bg-gray-600 cursor-pointer" <%= "required" if required %> <%= "accept=image/*" if field_type == "image" %> <%= "accept=#{validations['accept']}" if validations["accept"] %>>
+    <% if validations["max_size"] %>
+      <p class="text-xs text-gray-500 mt-1">Max size: <%= validations["max_size"] %></p>
+    <% end %>
+
+<% when "signature" %>
+    <div class="bg-gray-900 border border-gray-600 rounded-lg p-4 text-center">
+      <p class="text-sm text-gray-500">Signature capture requires JavaScript. Use the drawing area below.</p>
+      <textarea name="<%= input_name %>" id="submission_<%= field_name %>" rows="3" placeholder="Type your signature..." class="<%= input_class %> mt-2" <%= "required" if required %>><%= value %></textarea>
+    </div>
+
+<% when "hidden" %>
+    <input type="hidden" name="<%= input_name %>" id="submission_<%= field_name %>" value="<%= value || field["default_value"] %>">
+
+<% end %>
+
+<% unless field_type == "hidden" %>
+  </div>
+<% end %>
