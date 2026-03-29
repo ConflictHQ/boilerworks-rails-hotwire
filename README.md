@@ -53,3 +53,7 @@ make clean
 - [bootstrap.md](bootstrap.md) -- Conventions and patterns
 - [CLAUDE.md](CLAUDE.md) -- Claude agent configuration
 - [AGENTS.md](AGENTS.md) -- Generic agent shim
+
+---
+
+Boilerworks is a [Conflict](https://weareconflict.com) brand. CONFLICT is a registered trademark of Conflict LLC.
