@@ -21,8 +21,8 @@ Read it before writing any code.
 |---------|-----|
 | App | http://localhost:3000 |
 | Health | http://localhost:3000/up |
-| Mailpit | http://localhost:8026 |
-| MinIO | http://localhost:9003 |
+| Mailpit | http://localhost:8025 |
+| MinIO | http://localhost:9001 |
 
 ## Commands
 

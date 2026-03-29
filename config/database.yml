@@ -22,7 +22,7 @@ default: &default
 
 development:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL", "postgres://boilerworks:boilerworks@localhost:5435/boilerworks_development") %>
+  url: <%= ENV.fetch("DATABASE_URL", "postgres://boilerworks:boilerworks@localhost:5432/boilerworks_development") %>
   #username: boilerworks
 
   # The password associated with the PostgreSQL role (username).
