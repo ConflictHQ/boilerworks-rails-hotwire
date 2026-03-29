@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe ProductPolicy do
-  let(:product) { create(:product) }
+RSpec.describe ItemPolicy do
+  let(:item) { create(:item) }
 
-  context "with product.view permission" do
-    let(:permission) { create(:permission, slug: "product.view") }
+  context "with item.view permission" do
+    let(:permission) { create(:permission, slug: "item.view") }
     let(:group) { create(:group, permissions: [permission]) }
     let(:user) { create(:user, groups: [group]) }
-    subject { described_class.new(user, product) }
+    subject { described_class.new(user, item) }
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }
@@ -16,14 +16,14 @@ RSpec.describe ProductPolicy do
     it { is_expected.to forbid_action(:destroy) }
   end
 
-  context "with all product permissions" do
-    let(:view) { create(:permission, slug: "product.view") }
-    let(:add) { create(:permission, slug: "product.add") }
-    let(:change) { create(:permission, slug: "product.change") }
-    let(:delete) { create(:permission, slug: "product.delete") }
+  context "with all item permissions" do
+    let(:view) { create(:permission, slug: "item.view") }
+    let(:add) { create(:permission, slug: "item.add") }
+    let(:change) { create(:permission, slug: "item.change") }
+    let(:delete) { create(:permission, slug: "item.delete") }
     let(:group) { create(:group, permissions: [view, add, change, delete]) }
     let(:user) { create(:user, groups: [group]) }
-    subject { described_class.new(user, product) }
+    subject { described_class.new(user, item) }
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }
@@ -34,7 +34,7 @@ RSpec.describe ProductPolicy do
 
   context "without permissions" do
     let(:user) { create(:user) }
-    subject { described_class.new(user, product) }
+    subject { described_class.new(user, item) }
 
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:show) }

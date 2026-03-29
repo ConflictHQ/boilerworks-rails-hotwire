@@ -1,12 +1,12 @@
-<% content_for(:page_title, "Products") %>
+<% content_for(:page_title, "Items") %>
 
 <div class="flex items-center justify-between mb-6">
-  <h2 class="text-xl font-semibold text-text">Products</h2>
-  <%= link_to new_product_path, class: "inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-hover text-primary-fg rounded-lg text-sm font-medium transition-colors" do %>
+  <h2 class="text-xl font-semibold text-text">Items</h2>
+  <%= link_to new_item_path, class: "inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-hover text-primary-fg rounded-lg text-sm font-medium transition-colors" do %>
     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
     </svg>
-    New Product
+    New Item
   <% end %>
 </div>
 
@@ -21,17 +21,17 @@
         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-text-muted uppercase tracking-wider">Actions</th>
       </tr>
     </thead>
-    <tbody id="products" class="divide-y divide-border">
-      <% @products.each do |product| %>
-        <%= render product %>
+    <tbody id="items" class="divide-y divide-border">
+      <% @items.each do |item| %>
+        <%= render item %>
       <% end %>
     </tbody>
   </table>
 
-  <% if @products.empty? %>
+  <% if @items.empty? %>
     <div class="px-6 py-12 text-center">
-      <p class="text-text-muted">No products found.</p>
-      <%= link_to "Create your first product", new_product_path, class: "text-primary hover:underline text-sm mt-2 inline-block" %>
+      <p class="text-text-muted">No items found.</p>
+      <%= link_to "Create your first item", new_item_path, class: "text-primary hover:underline text-sm mt-2 inline-block" %>
     </div>
   <% end %>
 </div>
@@ -39,14 +39,14 @@
 <% if @pagy.pages > 1 %>
   <div class="mt-6 flex items-center justify-between">
     <p class="text-sm text-text-muted">
-      Showing <%= @pagy.from %>-<%= @pagy.to %> of <%= @pagy.count %> products
+      Showing <%= @pagy.from %>-<%= @pagy.to %> of <%= @pagy.count %> items
     </p>
     <nav class="flex items-center space-x-1">
       <% if @pagy.prev %>
-        <%= link_to "Previous", products_path(page: @pagy.prev), class: "px-3 py-2 rounded-lg bg-bg-card border border-border text-sm text-text-muted hover:bg-accent hover:text-text" %>
+        <%= link_to "Previous", items_path(page: @pagy.prev), class: "px-3 py-2 rounded-lg bg-bg-card border border-border text-sm text-text-muted hover:bg-accent hover:text-text" %>
       <% end %>
       <% if @pagy.next %>
-        <%= link_to "Next", products_path(page: @pagy.next), class: "px-3 py-2 rounded-lg bg-bg-card border border-border text-sm text-text-muted hover:bg-accent hover:text-text" %>
+        <%= link_to "Next", items_path(page: @pagy.next), class: "px-3 py-2 rounded-lg bg-bg-card border border-border text-sm text-text-muted hover:bg-accent hover:text-text" %>
       <% end %>
     </nav>
   </div>

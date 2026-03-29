@@ -1,0 +1,15 @@
+<% content_for(:page_title, "Edit #{@item.name}") %>
+
+<div class="mb-6">
+  <%= link_to item_path(@item.uuid), class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
+    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+    Back to Item
+  <% end %>
+</div>
+
+<div class="bg-bg-card border border-border rounded-lg p-6">
+  <h2 class="text-xl font-semibold text-text mb-6">Edit Item</h2>
+  <%= render "form", item: @item %>
+</div>

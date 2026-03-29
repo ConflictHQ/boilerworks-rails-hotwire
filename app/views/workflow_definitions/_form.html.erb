@@ -27,7 +27,7 @@
 
   <div>
     <%= form.label :target_type, class: "block text-sm font-medium text-text-muted mb-1" %>
-    <%= form.text_field :target_type, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "e.g. Product, Category (optional)" %>
+    <%= form.text_field :target_type, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "e.g. Item, Category (optional)" %>
   </div>
 
   <%= form.hidden_field :states, value: (workflow_definition.states || []).to_json, data: { workflow_builder_target: "statesInput" } %>

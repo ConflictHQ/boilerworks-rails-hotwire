@@ -1,15 +1,15 @@
-<% content_for(:page_title, "New Product") %>
+<% content_for(:page_title, "New Item") %>
 
 <div class="mb-6">
-  <%= link_to products_path, class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
+  <%= link_to items_path, class: "inline-flex items-center text-sm text-text-muted hover:text-text" do %>
     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
     </svg>
-    Back to Products
+    Back to Items
   <% end %>
 </div>
 
 <div class="bg-bg-card border border-border rounded-lg p-6">
-  <h2 class="text-xl font-semibold text-text mb-6">New Product</h2>
-  <%= render "form", product: @product %>
+  <h2 class="text-xl font-semibold text-text mb-6">New Item</h2>
+  <%= render "form", item: @item %>
 </div>

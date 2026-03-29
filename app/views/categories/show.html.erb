@@ -28,8 +28,8 @@
     </div>
 
     <div>
-      <dt class="text-sm font-medium text-text-muted">Products</dt>
-      <dd class="mt-1 text-text"><%= @category.products.count %></dd>
+      <dt class="text-sm font-medium text-text-muted">Items</dt>
+      <dd class="mt-1 text-text"><%= @category.items.count %></dd>
     </div>
 
     <div class="md:col-span-2">
@@ -56,7 +56,7 @@
       <% @category.children.each do |child| %>
         <div class="flex items-center justify-between px-4 py-3 bg-accent/50 rounded-lg">
           <%= link_to child.name, category_path(child.uuid), class: "text-primary hover:underline text-sm font-medium" %>
-          <span class="text-xs text-text-muted"><%= child.products.count %> products</span>
+          <span class="text-xs text-text-muted"><%= child.items.count %> items</span>
         </div>
       <% end %>
     </div>

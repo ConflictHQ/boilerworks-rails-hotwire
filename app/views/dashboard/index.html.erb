@@ -4,8 +4,8 @@
   <div class="bg-bg-card border border-border rounded-lg p-6">
     <div class="flex items-center justify-between">
       <div>
-        <p class="text-sm text-text-muted">Products</p>
-        <p class="text-3xl font-bold text-text mt-1"><%= @products_count %></p>
+        <p class="text-sm text-text-muted">Items</p>
+        <p class="text-3xl font-bold text-text mt-1"><%= @items_count %></p>
       </div>
       <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
         <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="mt-4">
-      <%= link_to "View all", products_path, class: "text-sm text-primary hover:underline" %>
+      <%= link_to "View all", items_path, class: "text-sm text-primary hover:underline" %>
     </div>
   </div>
 
@@ -53,11 +53,11 @@
 <div class="bg-bg-card border border-border rounded-lg p-6">
   <h2 class="text-lg font-semibold text-text mb-4">Quick Actions</h2>
   <div class="flex flex-wrap gap-3">
-    <%= link_to new_product_path, class: "inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-hover text-primary-fg rounded-lg text-sm font-medium transition-colors" do %>
+    <%= link_to new_item_path, class: "inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-hover text-primary-fg rounded-lg text-sm font-medium transition-colors" do %>
       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
       </svg>
-      New Product
+      New Item
     <% end %>
 
     <%= link_to new_category_path, class: "inline-flex items-center px-4 py-2 bg-bg-input hover:bg-accent text-text rounded-lg text-sm font-medium transition-colors border border-border" do %>

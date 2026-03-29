@@ -1,9 +1,9 @@
-<%= form_with(model: product, class: "space-y-6") do |form| %>
-  <% if product.errors.any? %>
+<%= form_with(model: item, class: "space-y-6") do |form| %>
+  <% if item.errors.any? %>
     <div class="px-4 py-3 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg">
-      <h3 class="text-sm font-medium mb-2"><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h3>
+      <h3 class="text-sm font-medium mb-2"><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h3>
       <ul class="list-disc list-inside text-sm space-y-1">
-        <% product.errors.full_messages.each do |message| %>
+        <% item.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -12,17 +12,17 @@
 
   <div>
     <%= form.label :name, class: "block text-sm font-medium text-text-muted mb-1" %>
-    <%= form.text_field :name, required: true, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "Product name" %>
+    <%= form.text_field :name, required: true, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "Item name" %>
   </div>
 
   <div>
     <%= form.label :slug, class: "block text-sm font-medium text-text-muted mb-1" %>
-    <%= form.text_field :slug, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "product-slug" %>
+    <%= form.text_field :slug, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "item-slug" %>
   </div>
 
   <div>
     <%= form.label :description, class: "block text-sm font-medium text-text-muted mb-1" %>
-    <%= form.text_area :description, rows: 4, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "Product description" %>
+    <%= form.text_area :description, rows: 4, class: "block w-full rounded-md bg-bg-input border border-input-border text-text placeholder-text-muted px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent", placeholder: "Item description" %>
   </div>
 
   <div>
@@ -37,6 +37,6 @@
 
   <div class="flex items-center gap-3 pt-2">
     <%= form.submit class: "rounded-lg px-4 py-2.5 bg-primary hover:bg-primary-hover text-primary-fg font-medium cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg" %>
-    <%= link_to "Cancel", products_path, class: "rounded-lg px-4 py-2.5 bg-bg-input hover:bg-accent text-text font-medium transition-colors border border-border" %>
+    <%= link_to "Cancel", items_path, class: "rounded-lg px-4 py-2.5 bg-bg-input hover:bg-accent text-text font-medium transition-colors border border-border" %>
   </div>
 <% end %>

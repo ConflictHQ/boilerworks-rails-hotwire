@@ -7,7 +7,7 @@ RSpec.describe User do
   end
 
   describe "#has_permission?" do
-    let(:permission) { create(:permission, slug: "product.view") }
+    let(:permission) { create(:permission, slug: "item.view") }
     let(:group) { create(:group, name: "viewer") }
     let(:user) { create(:user) }
 
@@ -17,11 +17,11 @@ RSpec.describe User do
     end
 
     it "returns true for granted permissions" do
-      expect(user.has_permission?("product.view")).to be true
+      expect(user.has_permission?("item.view")).to be true
     end
 
     it "returns false for ungranted permissions" do
-      expect(user.has_permission?("product.delete")).to be false
+      expect(user.has_permission?("item.delete")).to be false
     end
   end
 

@@ -9,7 +9,7 @@ RSpec.describe Category do
   describe "associations" do
     it { is_expected.to belong_to(:parent).class_name("Category").optional }
     it { is_expected.to have_many(:children).class_name("Category") }
-    it { is_expected.to have_many(:products) }
+    it { is_expected.to have_many(:items) }
   end
 
   describe "tree" do

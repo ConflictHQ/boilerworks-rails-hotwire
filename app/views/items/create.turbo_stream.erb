@@ -1,2 +1,2 @@
-<%= turbo_stream.remove @product %>
+<%= turbo_stream.prepend "items", @item %>
 <%= turbo_stream.update "flash", partial: "shared/flash" %>

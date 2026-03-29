@@ -1,0 +1,22 @@
+<tr id="<%= dom_id(item) %>" class="hover:bg-accent">
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-text">
+    <%= link_to item.name, item_path(item.uuid), class: "text-primary hover:underline" %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-text">
+    <%= item.category&.name || "Uncategorized" %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-text">
+    <% if item.price %>
+      $<%= number_with_precision(item.price, precision: 2) %>
+    <% else %>
+      <span class="text-text-muted">&mdash;</span>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">
+    <%= item.created_at.strftime("%b %d, %Y") %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+    <%= link_to "Edit", edit_item_path(item.uuid), class: "text-primary hover:underline mr-3" %>
+    <%= button_to "Delete", item_path(item.uuid), method: :delete, class: "text-destructive hover:underline", form: { data: { turbo_confirm: "Are you sure you want to delete this item?" } } %>
+  </td>
+</tr>

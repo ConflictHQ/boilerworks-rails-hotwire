@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   get "dashboard", to: "dashboard#index"
-  resources :products
+  resources :items
   resources :categories
   resources :workflow_definitions
   resources :workflow_instances do

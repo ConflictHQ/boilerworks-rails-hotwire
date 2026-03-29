@@ -40,8 +40,8 @@ make logs        # Tail logs
 ```
 app/
   models/concerns/   # Auditable, SoftDeletable, ExternalId, Versionable
-  models/            # User, Group, Permission, Product, Category, FormDefinition, FormSubmission, WorkflowDefinition, WorkflowInstance, TransitionLog
-  controllers/       # Dashboard, Products, Categories, FormDefinitions, FormSubmissions, WorkflowDefinitions, WorkflowInstances
+  models/            # User, Group, Permission, Item, Category, FormDefinition, FormSubmission, WorkflowDefinition, WorkflowInstance, TransitionLog
+  controllers/       # Dashboard, Items, Categories, FormDefinitions, FormSubmissions, WorkflowDefinitions, WorkflowInstances
   policies/          # Pundit policies per model
   services/          # FormValidationService, WorkflowTransitionService
   jobs/              # WorkflowActionJob
@@ -52,7 +52,7 @@ app/
 ## Rules
 
 - Concerns go in `app/models/concerns/`
-- Policies mirror models: `ProductPolicy` for `Product`
+- Policies mirror models: `ItemPolicy` for `Item`
 - All models use `uuid` for `to_param` (never expose integer IDs)
 - Soft delete via `soft_delete!`, never `destroy`
 - Pundit `authorize` on every controller action

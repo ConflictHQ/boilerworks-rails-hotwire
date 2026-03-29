@@ -14,7 +14,7 @@ Full-stack Rails 8 template with Hotwire (Turbo + Stimulus), Pundit group-based 
 
 - Group-based permission system with Pundit policies
 - Model concerns: Auditable, SoftDeletable, ExternalId, Versionable
-- Product + Category CRUD with Turbo Frame/Stream responses
+- Item + Category CRUD with Turbo Frame/Stream responses
 - JSON Schema forms engine (22 field types, validation, form builder)
 - JSON workflow engine (state machines, conditions, async actions)
 - Boilerworks dark theme
