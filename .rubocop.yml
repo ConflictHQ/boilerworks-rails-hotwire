@@ -32,3 +32,6 @@ Metrics/BlockLength:
     - "spec/**/*"
     - "config/**/*"
     - "db/**/*"
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
