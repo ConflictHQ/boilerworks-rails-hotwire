@@ -52,6 +52,7 @@ make clean
 
 - [bootstrap.md](bootstrap.md) -- Conventions and patterns
 - [CLAUDE.md](CLAUDE.md) -- Claude agent configuration
+- [CALLIOPE.md](CALLIOPE.md) -- Calliope harness shim
 - [AGENTS.md](AGENTS.md) -- Generic agent shim
 
 ---
