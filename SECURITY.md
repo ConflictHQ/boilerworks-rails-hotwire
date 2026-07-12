@@ -25,9 +25,7 @@ We will acknowledge your report within 48 hours and aim to release a fix within 
 
 When deploying Boilerworks:
 
-- Change all default credentials (database, MinIO, session secret)
-- Use HTTPS in production
-- Set `NODE_ENV=production`
-- Configure `CORS_ORIGINS` to your domain only
-- Use strong Auth0 credentials
-- Review the security hardening in `bootstrap.md`
+- Change all default credentials (database, MinIO, seeded `admin@boilerworks.dev` user)
+- Use HTTPS in production and enable `config.force_ssl` in `config/environments/production.rb`
+- Set `RAILS_ENV=production` and provide `RAILS_MASTER_KEY` (keep `config/master.key` out of version control)
+- Keep dependencies current — CI runs Brakeman, bundler-audit, and `importmap audit` on every push
